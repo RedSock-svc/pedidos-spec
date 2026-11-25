@@ -1,13 +1,29 @@
 # Requisitos no funcionales del producto: cómo de bien debe funcionar.
 # Cada requisito es medible (una cifra o un comportamiento comprobable) y dice cómo se comprueba.
 # Tipos: rendimiento, disponibilidad, seguridad, privacidad, accesibilidad, compatibilidad, resiliencia, recuperación.
-#
-# Ejemplo:
-# - id: RNF-001
-#   tipo: rendimiento
-#   requisito: Crear un pedido responde en menos de 300 ms en el percentil 95, con 50 pedidos por segundo
-#   aplica-a: [backend]           # nombres de componentes de producto.yaml; si no se indica, aplica a todo el producto
-#   casos-de-uso: [CU-001]        # si no se indica, aplica a todo el producto
-#   se-comprueba: test de carga en preproducción
+# La línea base común (RNF-BASE-) está en base.yaml.
+# aplica-a: nombres de componentes de producto.yaml; si no se indica, aplica a todo el producto.
 
-[]
+- id: RNF-001
+  tipo: rendimiento
+  requisito: Crear un pedido responde en menos de 300 ms en el percentil 95, con 50 pedidos por segundo
+  aplica-a: [backend]
+  casos-de-uso: [CU-001]
+  se-comprueba: test de carga en preproducción   # fuera del alcance del piloto
+
+- id: RNF-002
+  tipo: compatibilidad
+  requisito: La web funciona en las dos últimas versiones de Chrome, Firefox, Safari y Edge
+  aplica-a: [web]
+  se-comprueba: tests de aceptación @web en esos navegadores
+
+- id: RNF-003
+  tipo: privacidad
+  requisito: >-
+    Los pedidos de un cliente se anonimizan 5 años después de su último pedido: el idCliente se sustituye por
+    un valor que no permite saber de quién era. El resto del pedido se conserva para la contabilidad
+  aplica-a: [backend]
+  casos-de-uso: [CU-001]
+  se-comprueba: >-
+    escenarios de aceptación del caso de uso que implemente la anonimización, por especificar.
+    Fuera del alcance del piloto, que no llega a producción ni guarda datos reales

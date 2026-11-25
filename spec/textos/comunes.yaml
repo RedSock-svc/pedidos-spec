@@ -1,3 +1,5 @@
 # Textos que comparten varios módulos. Formato y reglas en README.md.
 
 error.generico: No se ha podido completar la operación. Inténtalo de nuevo
+error.NO_IDENTIFICADO: Tu sesión ha caducado. Vuelve a identificarte
+error.PETICION_NO_VALIDA: No se ha podido enviar el pedido. Revisa los datos e inténtalo de nuevo
