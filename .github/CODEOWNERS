@@ -1,0 +1,41 @@
+# Quién aprueba cada parte de la especificación (ver Roles y aprobaciones en la factory).
+# ARCHIVO GESTIONADO POR LA PLANTILLA producto-spec: los equipos se cambian en .copier-answers.yml y `copier update`.
+#
+# Cómo funciona:
+# - Gana la ÚLTIMA regla que coincide con cada archivo: van de lo general a lo particular.
+# - Un PR necesita la aprobación de un dueño de CADA archivo que toca. Un PR con un caso de uso y un contrato
+#   pide a la vez a Producto y a Arquitectura del producto.
+# - Varios equipos en una misma línea significan "cualquiera de ellos", no "todos". Por eso cada ruta tiene un
+#   solo dueño, y las aprobaciones que dependen del contenido (datos personales → Seguridad, requisitos →
+#   Producto además de Arquitectura del producto) se piden con la lista de la plantilla de PR.
+
+# Por defecto: Revisión
+*                                   @RedSock-svc/review
+
+# Arquitectura del producto: modelo de dominio, contratos, requisitos, componentes y decisiones
+/producto.yaml                      @RedSock-svc/product-architecture
+/spec/dominio/                      @RedSock-svc/product-architecture
+/spec/contratos/                    @RedSock-svc/product-architecture
+/spec/requisitos/                   @RedSock-svc/product-architecture
+/docs/arquitectura.md               @RedSock-svc/product-architecture
+/docs/adr/                          @RedSock-svc/product-architecture
+
+# Producto: qué hace el producto
+/spec/casos-de-uso/                 @RedSock-svc/product
+/spec/reglas/                       @RedSock-svc/product
+/spec/textos/                       @RedSock-svc/product
+/spec/dominio/glosario.md           @RedSock-svc/product
+
+# Seguridad: modelo de amenazas
+/docs/seguridad/                    @RedSock-svc/security
+
+# Arquitectura: la línea base común a todos los productos
+/spec/requisitos/base.yaml          @RedSock-svc/architecture
+
+# Plataforma: archivos que gestiona la plantilla
+/.github/                           @RedSock-svc/platform
+/.copier-answers.yml                @RedSock-svc/platform
+/docs/plantillas/                   @RedSock-svc/platform
+/spec/dominio/README.md             @RedSock-svc/platform
+/spec/reglas/README.md              @RedSock-svc/platform
+/spec/textos/README.md              @RedSock-svc/platform

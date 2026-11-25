@@ -1,0 +1,15 @@
+# Respuestas de la plantilla producto-spec. No se edita a mano: lo usa `copier update`.
+_src_path: plantillas/producto-spec
+descripcion: 'Producto de prueba del piloto de la factory: pedidos online con control
+    de stock.'
+equipos:
+    arquitectura: architecture
+    arquitectura_producto: product-architecture
+    plataforma: platform
+    producto: product
+    revision: review
+    seguridad: security
+modo: pequeño
+modulo: pedidos
+organizacion: RedSock-svc
+producto: pedidos

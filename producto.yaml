@@ -1,0 +1,25 @@
+# Inventario del producto: componentes, contratos que expone o consume cada uno y dependencias externas.
+# Ver docs/conceptos-producto-y-componentes.md#productoyaml de la factory.
+
+producto: pedidos
+modo: pequeño            # individual, pequeño o completo
+
+# Cada componente se añade en un PR antes de generarlo (lo aprueba Arquitectura del producto).
+# Los contratos se citan sin extensión y con su versión mayor: pedidos-api.v1
+# Un contrato de una dependencia externa lleva su nombre delante: pagos/pagos-api.v1
+componentes: []
+#  - nombre: backend
+#    repo: pedidos-backend
+#    plantilla: java-spring-modulith
+#    contratos:
+#      expone: [pedidos-api.v1]
+#      consume: []
+
+# Otros productos de la factory (tipo: producto) o sistemas fuera de ella (tipo: sistema).
+externos: []
+#  - nombre: pasarela
+#    tipo: sistema
+#    contratos: spec/contratos/externos/pasarela/
+
+# Contratos que otros productos pueden consumir. Por defecto, ninguno.
+publicos: []

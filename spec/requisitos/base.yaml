@@ -1,0 +1,20 @@
+# Línea base de requisitos no funcionales, común a todos los productos.
+# ARCHIVO GESTIONADO POR LA PLANTILLA producto-spec: no se edita aquí, llega con `copier update`.
+# El producto solo añade, en no-funcionales.yaml, los requisitos que la endurecen o la completan.
+# Relajar uno de estos requisitos necesita un ADR aprobado por Arquitectura.
+#
+# Como la plantilla no conoce los componentes de cada producto, estos requisitos no llevan `aplica-a`:
+# aplican a todo el producto, y el propio requisito dice a qué tipo de componente afecta.
+#
+# BORRADOR: el contenido definitivo de la línea base es una decisión pendiente
+# (ver conceptos-especificacion.md#decisiones-pendientes). Estos son los que ya citan los documentos.
+
+- id: RNF-BASE-001
+  tipo: accesibilidad
+  requisito: Los componentes con interfaz cumplen WCAG 2.2 nivel AA
+  se-comprueba: control de accesibilidad (axe) y revisión manual
+
+- id: RNF-BASE-002
+  tipo: privacidad
+  requisito: Ningún componente escribe datos de clase personal o sensible en logs ni en trazas
+  se-comprueba: enmascarado de las librerías del catálogo y revisión de Seguridad
