@@ -1,8 +1,8 @@
 # ADR-001: Aceptar sin mitigar los pedidos masivos durante el piloto
 
-- Estado: propuesto
+- Estado: aceptado
 - Fecha: 2026-11-25
-- Aprobado por: Seguridad (pendiente)
+- Aprobado por: Seguridad, 2026-11-25
 
 ## Contexto
 
@@ -25,5 +25,5 @@ Se acepta la amenaza sin mitigar **mientras `pedidos` sea un producto de prueba*
 ## Consecuencias
 
 - En los entornos del piloto, un cliente puede agotar el stock con pedidos masivos. No afecta a nadie porque no hay usuarios reales.
-- La amenaza 4 del modelo de amenazas enlaza con este ADR, y queda aceptada cuando Seguridad lo apruebe.
+- La amenaza 4 del modelo de amenazas enlaza con este ADR, aceptada por Seguridad.
 - Antes de producción hay que volver a decidir, probablemente con limitación de peticiones en la plataforma y, si hace falta, una regla de negocio.
