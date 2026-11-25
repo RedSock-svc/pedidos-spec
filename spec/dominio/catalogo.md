@@ -6,7 +6,7 @@ Los productos que se pueden pedir y su stock. Formato y clases de dato en `READM
 
 | Atributo | Tipo | Clase | Descripción |
 |---|---|---|---|
-| id | identificador | público | |
+| id | identificador: minúsculas, números y guiones, de 1 a 50 caracteres | público | |
 | nombre | texto, 1 a 100 caracteres | público | |
 | precio | entero ≥ 0, céntimos de euro | público | Precio actual por unidad |
 | stock | entero ≥ 0 | interno | Unidades disponibles para pedir (`RN-001`) |

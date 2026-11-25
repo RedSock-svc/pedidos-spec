@@ -9,7 +9,7 @@ equipos:
     producto: product
     revision: review
     seguridad: security
-modo: pequeño
+modo: individual
 modulo: pedidos
 organizacion: RedSock-svc
 producto: pedidos

@@ -9,7 +9,8 @@ info:
     Una petición que no cumple este contrato (tipos incorrectos, campos obligatorios ausentes) se rechaza con
     PETICION_NO_VALIDA. Los campos que el contrato no define se ignoran.
   contact:
-    name: Equipo de pedidos
+    name: product-architecture
+    url: https://github.com/orgs/RedSock-svc/teams/product-architecture
 
 servers:
   - url: /api/v1
@@ -105,7 +106,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Token OpenID Connect del espacio de identidad de clientes
+      description: Token OpenID Connect del proveedor de identidad de los clientes
 
   responses:
     NoIdentificado:
@@ -125,6 +126,7 @@ components:
       properties:
         id:
           type: string
+          pattern: "^[a-z0-9-]{1,50}$"
           example: taza-roja
         nombre:
           type: string
@@ -151,6 +153,7 @@ components:
       properties:
         idProducto:
           type: string
+          pattern: "^[a-z0-9-]{1,50}$"
           example: taza-roja
         cantidad:
           type: integer
@@ -170,6 +173,7 @@ components:
           example: P-1001
         idProducto:
           type: string
+          pattern: "^[a-z0-9-]{1,50}$"
           example: taza-roja
         cantidad:
           type: integer

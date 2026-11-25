@@ -6,12 +6,12 @@ Las pantallas se construyen con los componentes de `red-ui`. Todavía no hay dis
 
 1. `nuevo-pedido` → `pedido-confirmado` (flujo principal)
 2. Si el backend rechaza el pedido (A1, A2, A3): se queda en `nuevo-pedido` con el aviso de error
-3. Si la sesión ha caducado (A4): aviso y paso al inicio de sesión del proveedor de identidad
+3. Si la sesión ha caducado (A4), al abrir la pantalla o al confirmar: aviso y paso al inicio de sesión del proveedor de identidad
 4. Desde `pedido-confirmado`, "Hacer otro pedido" vuelve a `nuevo-pedido`
 
 ## Pantalla: nuevo-pedido
 
-Título `pedido.nuevo.titulo`. Lista de productos; cada uno muestra su nombre, su precio (`pedido.nuevo.precio`) y su stock (`pedido.nuevo.stock`). El cliente elige uno, indica la cantidad (`pedido.nuevo.cantidad`, por defecto 1) y pulsa `pedido.confirmar.boton`.
+Título `pedido.nuevo.titulo`. Lista de productos; cada uno muestra su nombre, su precio (`pedido.nuevo.precio`) y su stock (`pedido.nuevo.stock`), o `pedido.nuevo.agotado` si no tiene stock. Un producto agotado no se puede elegir. El cliente elige uno, indica la cantidad (`pedido.nuevo.cantidad`, por defecto 1) y pulsa `pedido.confirmar.boton`.
 
 | Estado | Qué ve el usuario |
 |---|---|
@@ -23,7 +23,7 @@ Título `pedido.nuevo.titulo`. Lista de productos; cada uno muestra su nombre, s
 - El botón `pedido.confirmar.boton` está desactivado mientras no hay un producto elegido o la cantidad es menor que 1.
 - Los precios se muestran en euros con dos decimales y coma decimal: `1250` → `12,50`.
 
-Textos que usa: `pedido.nuevo.titulo`, `pedido.nuevo.precio`, `pedido.nuevo.stock`, `pedido.nuevo.cantidad`, `pedido.confirmar.boton`, `pedido.cargando`, `pedido.vacio`, `error.*`
+Textos que usa: `pedido.nuevo.titulo`, `pedido.nuevo.precio`, `pedido.nuevo.stock`, `pedido.nuevo.agotado`, `pedido.nuevo.cantidad`, `pedido.confirmar.boton`, `pedido.cargando`, `pedido.vacio`, `error.*`
 
 ## Pantalla: pedido-confirmado
 

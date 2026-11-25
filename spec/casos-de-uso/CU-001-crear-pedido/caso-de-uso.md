@@ -26,7 +26,7 @@ contratos: [pedidos-api.v1]
 ## Flujo principal
 
 1. El cliente abre la pantalla de nuevo pedido.
-2. El sistema muestra los productos del catálogo con su nombre, su precio y las unidades en stock.
+2. El sistema muestra los productos del catálogo con su nombre, su precio y las unidades en stock. Los que no tienen stock se muestran como agotados y no se pueden elegir.
 3. El cliente elige un producto y una cantidad.
 4. El cliente confirma el pedido.
 5. El sistema comprueba que la cantidad es válida (`RN-002`) y que hay stock suficiente (`RN-001`).
@@ -59,7 +59,7 @@ Un pedido es de **un solo producto**. Los pedidos con varios productos serán ot
 
 ### A4. Cliente no identificado (en cualquier paso)
 
-- **Cuándo:** la petición llega sin una identidad válida o caducada.
+- **Cuándo:** la petición llega sin identidad, o con una que no es válida o ha caducado.
 - **Qué pasa:** el sistema la rechaza con el error `NO_IDENTIFICADO` y la web lleva al cliente a identificarse.
 - **Resultado:** no se crea ningún pedido.
 

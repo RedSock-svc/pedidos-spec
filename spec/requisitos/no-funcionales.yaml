@@ -17,6 +17,7 @@
   aplica-a: [web]
   se-comprueba: tests de aceptación @web en esos navegadores
 
+# El borrado a petición del titular, que también exige la clase personal, necesita su propio caso de uso antes de producción.
 - id: RNF-003
   tipo: privacidad
   requisito: >-

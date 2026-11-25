@@ -2,7 +2,8 @@
 
 pedido.nuevo.titulo: Nuevo pedido
 pedido.nuevo.precio: "{precio} €"
-pedido.nuevo.stock: "{unidades} unidades disponibles"
+pedido.nuevo.stock: "Disponibles: {unidades}"
+pedido.nuevo.agotado: Agotado
 pedido.nuevo.cantidad: Cantidad
 pedido.confirmar.boton: Confirmar pedido
 pedido.confirmado.titulo: Pedido confirmado

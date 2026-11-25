@@ -69,6 +69,12 @@ Característica: CU-001 Crear pedido
       | 1.5      |
 
   @backend
+  Escenario: pedido sin indicar el producto
+    Cuando el cliente envía un pedido de 1 unidad sin indicar el producto
+    Entonces la petición se rechaza con el error PETICION_NO_VALIDA
+    Y no se crea ningún pedido
+
+  @backend
   Escenario: pedido de un producto que no existe
     Dado que no existe ningún producto con el identificador "no-existe"
     Cuando el cliente pide 1 unidad del producto "no-existe"
@@ -94,7 +100,14 @@ Característica: CU-001 Crear pedido
   Escenario: el cliente ve los productos que puede pedir
     Dado que el backend devuelve el producto "Taza roja" con precio 1250 y 5 unidades en stock
     Cuando el cliente abre la pantalla de nuevo pedido
-    Entonces ve el producto "Taza roja" con el precio "12,50 €" y "5 unidades disponibles"
+    Entonces ve el producto "Taza roja" con el precio "12,50 €" y "Disponibles: 5"
+
+  @web
+  Escenario: un producto agotado no se puede elegir
+    Dado que el backend devuelve el producto "Libreta" con precio 450 y 0 unidades en stock
+    Cuando el cliente abre la pantalla de nuevo pedido
+    Entonces ve el producto "Libreta" con el texto "Agotado"
+    Y no puede elegirlo
 
   @web
   Escenario: el cliente confirma un pedido
@@ -129,7 +142,14 @@ Característica: CU-001 Crear pedido
     Entonces ve el mensaje "Este producto ya no está disponible"
 
   @web
-  Escenario: sesión caducada
+  Escenario: sesión caducada al abrir la pantalla
+    Dado que el backend rechaza la consulta de productos con NO_IDENTIFICADO
+    Cuando el cliente abre la pantalla de nuevo pedido
+    Entonces ve el mensaje "Tu sesión ha caducado. Vuelve a identificarte"
+    Y la web lo lleva a identificarse
+
+  @web
+  Escenario: sesión caducada al confirmar
     Dado que el backend rechaza la petición con NO_IDENTIFICADO
     Cuando el cliente confirma el pedido
     Entonces ve el mensaje "Tu sesión ha caducado. Vuelve a identificarte"
@@ -143,4 +163,4 @@ Característica: CU-001 Crear pedido
     Y el producto "Taza roja" con precio 1250 y 5 unidades en stock
     Cuando abre la pantalla de nuevo pedido, elige "Taza roja", indica 3 unidades y confirma
     Entonces ve el pedido como confirmado con un importe total de "37,50 €"
-    Y al volver a la pantalla de nuevo pedido ve "2 unidades disponibles"
+    Y al volver a la pantalla de nuevo pedido ve "Disponibles: 2"
