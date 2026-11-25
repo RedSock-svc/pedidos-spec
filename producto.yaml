@@ -2,7 +2,7 @@
 # Ver docs/conceptos-producto-y-componentes.md#productoyaml de la factory.
 
 producto: pedidos
-modo: pequeño            # individual, pequeño o completo
+modo: individual            # individual, pequeño o completo
 
 componentes:
   - nombre: backend
