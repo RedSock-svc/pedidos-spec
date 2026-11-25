@@ -1,0 +1,208 @@
+openapi: 3.1.0
+info:
+  title: API de pedidos
+  version: 1.0.0
+  description: |
+    API del componente backend de pedidos. La consume el componente web.
+    Todas las operaciones necesitan un cliente identificado (token OpenID Connect del proveedor de identidad).
+    Importes en céntimos de euro (RN-004).
+    Una petición que no cumple este contrato (tipos incorrectos, campos obligatorios ausentes) se rechaza con
+    PETICION_NO_VALIDA. Los campos que el contrato no define se ignoran.
+  contact:
+    name: product-architecture
+    url: https://github.com/orgs/RedSock-svc/teams/product-architecture
+
+servers:
+  - url: /api/v1
+
+security:
+  - clienteIdentificado: []
+
+tags:
+  - name: catalogo
+  - name: pedidos
+
+paths:
+  /productos:
+    get:
+      operationId: listarProductos
+      summary: Productos del catálogo con su precio y su stock
+      description: "CU-001, paso 2."
+      tags: [catalogo]
+      responses:
+        "200":
+          description: Productos del catálogo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Producto"
+        "401":
+          $ref: "#/components/responses/NoIdentificado"
+
+  /pedidos:
+    post:
+      operationId: crearPedido
+      summary: Crea un pedido confirmado y descuenta el stock
+      description: |
+        CU-001, pasos 4 a 6. El titular del pedido es el cliente del token, nunca un dato del cuerpo (RN-003).
+      tags: [pedidos]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NuevoPedido"
+      responses:
+        "201":
+          description: Pedido confirmado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pedido"
+        "400":
+          description: "PETICION_NO_VALIDA: el cuerpo no cumple el contrato, por ejemplo una cantidad que no es un número entero"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                codigo: PETICION_NO_VALIDA
+                mensaje: "cantidad: se esperaba un número entero"
+        "401":
+          $ref: "#/components/responses/NoIdentificado"
+        "404":
+          description: "PRODUCTO_NO_ENCONTRADO: el producto no existe"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                codigo: PRODUCTO_NO_ENCONTRADO
+                mensaje: No existe el producto no-existe
+        "409":
+          description: "STOCK_INSUFICIENTE: la cantidad supera el stock del producto (RN-001)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                codigo: STOCK_INSUFICIENTE
+                mensaje: Se piden 3 unidades y hay 2 en stock
+        "422":
+          description: "CANTIDAD_NO_VALIDA: la cantidad es menor que 1 (RN-002)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                codigo: CANTIDAD_NO_VALIDA
+                mensaje: La cantidad debe ser mayor que cero
+
+components:
+  securitySchemes:
+    clienteIdentificado:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token OpenID Connect del proveedor de identidad de los clientes
+
+  responses:
+    NoIdentificado:
+      description: "NO_IDENTIFICADO: falta el token o no es válido"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            codigo: NO_IDENTIFICADO
+            mensaje: Falta un token válido
+
+  schemas:
+    Producto:
+      type: object
+      required: [id, nombre, precio, stock]
+      properties:
+        id:
+          type: string
+          pattern: "^[a-z0-9-]{1,50}$"
+          example: taza-roja
+        nombre:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: Taza roja
+        precio:
+          type: integer
+          minimum: 0
+          description: Precio por unidad, en céntimos de euro
+          example: 1250
+        stock:
+          type: integer
+          minimum: 0
+          description: Unidades disponibles para pedir
+          example: 5
+
+    NuevoPedido:
+      type: object
+      required: [idProducto, cantidad]
+      description: |
+        No tiene campo de titular: el titular sale del token (RN-003). Si la petición trae campos que no están
+        aquí, se ignoran, de modo que intentar indicar otro titular no tiene efecto.
+      properties:
+        idProducto:
+          type: string
+          pattern: "^[a-z0-9-]{1,50}$"
+          example: taza-roja
+        cantidad:
+          type: integer
+          description: |
+            Unidades pedidas. Si no es un número entero, la petición se rechaza con PETICION_NO_VALIDA.
+            Si es menor que 1, el backend la rechaza con CANTIDAD_NO_VALIDA (RN-002); por eso el contrato no fija
+            un mínimo, que haría fallar la petición antes de llegar a la regla.
+          example: 3
+
+    Pedido:
+      type: object
+      required: [id, idProducto, cantidad, precioUnitario, importeTotal, estado, fechaCreacion]
+      properties:
+        id:
+          type: string
+          description: Número de pedido que ve el cliente
+          example: P-1001
+        idProducto:
+          type: string
+          pattern: "^[a-z0-9-]{1,50}$"
+          example: taza-roja
+        cantidad:
+          type: integer
+          minimum: 1
+          example: 3
+        precioUnitario:
+          type: integer
+          minimum: 0
+          description: Precio por unidad al confirmar, en céntimos de euro
+          example: 1250
+        importeTotal:
+          type: integer
+          minimum: 0
+          description: precioUnitario × cantidad, en céntimos de euro (RN-004)
+          example: 3750
+        estado:
+          type: string
+          enum: [CONFIRMADO]
+        fechaCreacion:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      required: [codigo, mensaje]
+      properties:
+        codigo:
+          type: string
+          enum: [PETICION_NO_VALIDA, NO_IDENTIFICADO, PRODUCTO_NO_ENCONTRADO, STOCK_INSUFICIENTE, CANTIDAD_NO_VALIDA]
+        mensaje:
+          type: string
+          description: Detalle para quien integra. La interfaz no lo muestra; usa el texto error.<codigo> de spec/textos/

@@ -1,6 +1,18 @@
 # Textos del módulo pedidos. Formato y reglas en README.md.
-# Ejemplo:
-# pedido.confirmar.boton: Confirmar pedido
-# error.STOCK_INSUFICIENTE: No hay unidades suficientes
 
-{}
+pedido.nuevo.titulo: Nuevo pedido
+pedido.nuevo.precio: "{precio} €"
+pedido.nuevo.stock: "Disponibles: {unidades}"
+pedido.nuevo.agotado: Agotado
+pedido.nuevo.cantidad: Cantidad
+pedido.confirmar.boton: Confirmar pedido
+pedido.confirmado.titulo: Pedido confirmado
+pedido.confirmado.numero: "Número de pedido: {numero}"
+pedido.confirmado.importe: "Importe total: {importe} €"
+pedido.confirmado.otro: Hacer otro pedido
+pedido.cargando: Cargando productos…
+pedido.vacio: No hay productos disponibles
+
+error.PRODUCTO_NO_ENCONTRADO: Este producto ya no está disponible
+error.STOCK_INSUFICIENTE: No hay unidades suficientes
+error.CANTIDAD_NO_VALIDA: La cantidad debe ser un número entero mayor que cero

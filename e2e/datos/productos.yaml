@@ -1,0 +1,14 @@
+# Datos sintéticos del catálogo para los entornos compartidos y los tests e2e. Nunca datos reales.
+# Precios en céntimos de euro.
+- id: taza-roja
+  nombre: Taza roja
+  precio: 1250
+  stock: 5
+- id: camiseta-azul
+  nombre: Camiseta azul
+  precio: 1999
+  stock: 20
+- id: libreta
+  nombre: Libreta
+  precio: 450
+  stock: 0
